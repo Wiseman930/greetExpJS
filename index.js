@@ -15,21 +15,23 @@ let local = process.env.LOCAL || false;
 if (process.env.DATABASE_URL && !local){
     useSSL = true;
 }
- const DATABASE_URL = process.env.DATABASE_URL || {
-    host: 'localhost',
-    port: 5432,
-    database: 'demodb',
-    user: 'postgres',
-    password: 'BAab5525#',
+ const DATABASE_URL = {
+  host: 'localhost',
+  port: 5432,
+  database: 'demodb',
+  user: 'postgres',
+  password: 'BAab5525#',
 
-};
+} || process.env.DATABASE_URL ;
+
+
 const config = {
 	connectionString : DATABASE_URL,
-    ssl: {
+    /*ssl: {
         rejectUnauthorized: false
-    }
+    }*/
 }
-const db = pgp(config);
+const db = pgp(DATABASE_URL);
 module.exports = db;
 
 const greetMe = greetingNames(db);

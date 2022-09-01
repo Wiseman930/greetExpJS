@@ -89,6 +89,7 @@ module.exports = function greetMeInLangage(db) {
   }
   async function getMyCount() {
     let grandCount = await db.one("SELECT count(*) FROM users;");
+    console.log(grandCount)
     return grandCount.count;
   }
   function returnEmptyButtonsAndTextbox() {
