@@ -33,7 +33,7 @@ module.exports = function greetMeInLangage(db) {
     }
   }
 
-  async function enterNameAndLanguage(aNameIn, LanguageIn) {
+ function enterNameAndLanguage(aNameIn, LanguageIn) {
     let alphabet = /^[a-z A-Z]+$/;
 
     if (LanguageIn == "english" && aNameIn !== "" && alphabet.test(aNameIn)) {
@@ -60,22 +60,15 @@ module.exports = function greetMeInLangage(db) {
       languageChoice = "";
     }
   }
+
   async function getFromDatabase(aNameIn, LanguageIn) {
     giveMeName2 = aNameIn.toUpperCase();
 
-    let checkName = await db.oneOrNone(
-      "SELECT greeted_name FROM users WHERE  = $1",
-      [giveMeName2]
-    );
+    let checkName = await db.oneOrNone("SELECT greeted_name FROM users WHERE =$1", [giveMeName2]);
     if (checkName == null && giveMeName2 != "" && LanguageIn) {
-      await db.none("INSERT INTO users(greeted_name, count) values($1,$2)", [
-        giveMeName2,
-        1,
-      ]);
+      await db.none("INSERT INTO users(greeted_name, count) values($1, $2)", [giveMeName2, 1]);
     } else if (giveMeName2 != "" && LanguageIn) {
-      await db.none("UPDATE users SET count = count+1 WHERE greeted_name =$1", [
-        giveMeName2,
-      ]);
+      await db.none("UPDATE users SET count = count+1 WHERE greeted_name =$1", [giveMeName2]);
     }
   }
 
@@ -97,9 +90,7 @@ module.exports = function greetMeInLangage(db) {
   }
   async function countEachName(name) {
     let eachNameCount = await db.one(
-      "SELECT count FROM users WHERE greeted_name=$1",
-      [name]
-    );
+      "SELECT count FROM users WHERE greeted_name=$1",[name]);
     let eachName = eachNameCount.count;
     return eachName;
   }

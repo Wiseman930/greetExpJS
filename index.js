@@ -9,30 +9,30 @@ const session = require("express-session");
 
 const pgp = require('pg-promise')()
 
+//const DATABASE_URL= process.env.DATABASE_URL || "postgresql://postgres:DAad5525@localhost:5432/demodb";
 
-let useSSL = false;
-let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local){
-    useSSL = true;
-}
  const DATABASE_URL = {
   host: 'localhost',
   port: 5432,
   database: 'demodb',
   user: 'postgres',
-  password: 'BAab5525#',
+  password: 'DAad5525',
 
 } || process.env.DATABASE_URL ;
 
 
+
 const config = {
-	connectionString : DATABASE_URL,
-    /*ssl: {
-        rejectUnauthorized: false
-    }*/
+	DATABASE_URL
+
 }
-const db = pgp(DATABASE_URL);
-module.exports = db;
+if(process.env.NODE_ENV == "production"){
+  config.ssl = {
+    rejectUnauthorized: false
+}
+}
+const db = pgp(config);
+//module.exports = db;
 
 const greetMe = greetingNames(db);
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
@@ -63,10 +63,10 @@ app.get("/", async function (req, res) {
 
 //app.post("/greetings", greetThem.flashAndGreet )
     app.post("/greetings",async function (req, res) {
-        try {
+
             greetMe.notCheckedbutton(req.body.name, req.body.languageTypeRadio);
-             await greetMe.enterNameAndLanguage(req.body.name, req.body.languageTypeRadio);
-             await greetMe.getFromDatabase(req.body.name, req.body.languageTypeRadio);
+            greetMe.enterNameAndLanguage(req.body.name, req.body.languageTypeRadio);
+            await greetMe.getFromDatabase(req.body.name, req.body.languageTypeRadio);
 
              if(greetMe.returnEmptyButtonsAndTextbox() !==''){
                setTimeout(function(){
@@ -83,9 +83,6 @@ app.get("/", async function (req, res) {
              req.flash("greeted", greetMe.returnChosenLanguage());
 
              res.redirect("/");
-             }catch (error) {
-               //console.log(error)
-               }
       });
 
 //app.get("/actions", greetThem.messageAndCount )
