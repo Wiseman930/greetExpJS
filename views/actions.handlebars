@@ -1,0 +1,21 @@
+<h1 for="fname">Greeting </h1>
+<nav class="navbar">
+    <a href="/">Back</a>
+</nav>
+<table>
+    <tr>
+        <th>
+            <h3> Names Greeted <h3>
+        </th>
+    </tr>
+        <div class="myNamesAndCount">
+            {{#each nameAndCountList}}
+              <tr>
+            <td class="tableBackGround">
+                <a href="/namesGreeted/{{greeted_name}}">{{greeted_name}}</a>
+            </td>
+            </tr>
+            {{/each}}
+    </div>
+    <table>
+  <h1>{{messageAfterReset}}</h1>

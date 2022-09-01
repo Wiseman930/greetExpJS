@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url('https://images.pexels.com/photos/6168064/pexels-photo-6168064.jpeg?cs=srgb&dl=pexels-vie-studio-6168064.jpg&fm=jpg');
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            font-size: large;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: aliceblue;
+        }
+
+        .navbar {
+            background-color: antiquewhite;
+            padding: 13px;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+
+        .fname {
+            padding: 13px;
+        }
+
+        .container {
+
+            display: flex;
+            flex-flow: column wrap;
+            background: rgba(96, 108, 56, .43)
+        }
+    </style>
+</head>
+
+<body>
+    <div class="countainer">
+        <h1 class="heading" for="fname">Greeting </h1>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="/actions">Back</a>
+        </nav>
+        <h2> {{myNames}} has been greeted {{countsOfEach}}<h2>
+    </div>
+</body>
+
+</html>
