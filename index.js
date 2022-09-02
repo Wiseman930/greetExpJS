@@ -19,14 +19,16 @@ const DATABASE_URL =
 
 const config = {
   connectionString: DATABASE_URL,
-  ssl: {
+ /* ssl: {
     rejectUnauthorized: false,
-  },
+  },*/
 };
 
 const db = pgp(config);
 
 const greetMe = greetingNames(db);
+const greets = require('./myRoutes/Allroutes')
+const greetThem = greets(greetMe)
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 
 app.use(
@@ -42,63 +44,21 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/", async function (req, res) {
-  res.render("index", {
-    count: await greetMe.getMyCount(),
-  });
-});
+app.get("/", greetThem.mainDisplay)
 
-app.post("/greetings", async function (req, res) {
-  greetMe.notCheckedbutton(req.body.name, req.body.languageTypeRadio);
-  greetMe.enterNameAndLanguage(req.body.name, req.body.languageTypeRadio);
-  await greetMe.getFromDatabase(req.body.name, req.body.languageTypeRadio);
+app.post("/greetings", greetThem.flashAndGreet)
 
-  if (greetMe.returnEmptyButtonsAndTextbox() !== "") {
-    setTimeout(function () {
-      greetMe.returnEmptyButtonsAndTextbox() == "";
-    }, 4000);
-  }
-  req.flash("errorMessages", greetMe.returnEmptyButtonsAndTextbox());
 
-  if (greetMe.returnChosenLanguage() !== "") {
-    setTimeout(function () {
-      greetMe.returnChosenLanguage() == "";
-    }, 4000);
-  }
-  req.flash("greeted", greetMe.returnChosenLanguage());
+app.get("/actions", greetThem.messageAndCount)
 
-  res.redirect("/");
-});
+app.get("/namesGreeted/:name", greetThem.listOfGreeted)
 
-app.get("/actions", async function (req, res) {
-  res.render("actions", {
-    messageAfterReset: greetMe.returnResetMessage(),
-    nameAndCountList: await greetMe.greetedNames(),
-  });
-});
+app.post("/reset", greetThem.flashError)
 
-app.get("/namesGreeted/:name", async function (req, res) {
-  let myName = req.params.name;
-  let howManytimes;
-  if ((await greetMe.countEachName(myName)) > 1) {
-    howManytimes = (await greetMe.countEachName(myName)) + " times";
-  } else if ((await greetMe.countEachName(myName)) == 1) {
-    howManytimes = (await greetMe.countEachName(myName)) + " time";
-  }
-  res.render("nameGreeted", {
-    myNames: myName,
-    countsOfEach: howManytimes,
-  });
-});
-
-app.post("/reset", async function (req, res) {
-  await greetMe.resetAll();
-  req.flash("errorMessages", greetMe.returnEmptyButtonsAndTextbox());
-  res.redirect("/");
-});
 
 let PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
   console.log("App starting on port", PORT);
-});
+})
+

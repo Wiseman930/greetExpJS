@@ -3,7 +3,7 @@ const greetMeInLangage = require('../greet.js');
 
 const pgp = require('pg-promise')()
 
-const DATABASE_URL =   process.env.DATABASE_URL || "postgresql://postgres:pg1999@localhost:5432/postgres";
+const DATABASE_URL =   process.env.DATABASE_URL || "postgresql://postgres:pg1999@localhost:5432/test";
 const config = {
     connectionString: DATABASE_URL
 }
