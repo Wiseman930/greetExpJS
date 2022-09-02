@@ -47,6 +47,26 @@ it("should be able to count the names greeted", async function(){
 
     assert.equal(2, await greetings.getMyCount());
 });
+
+it("should be able to  show all the names greeted", async function(){
+    let greetings = greetMeInLangage(db);
+
+    await greetings.getFromDatabase("Wiseman", 'english');
+    await greetings.getFromDatabase("Wiseman", "english");
+    await greetings.getFromDatabase("Linda", "isiXhosa");
+    await greetings.getFromDatabase("Mbuso", "isiXhosa");
+
+    assert.deepEqual([{
+        greeted_name: 'WISEMAN'
+      },
+      {
+        greeted_name: 'LINDA'
+      },
+      {
+        greeted_name: 'MBUSO'
+      }
+    ], await greetings.greetedNames());
+});
 })
 
 
