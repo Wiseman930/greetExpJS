@@ -19,9 +19,9 @@ const DATABASE_URL =
 
 const config = {
   connectionString: DATABASE_URL,
-  /*ssl: {
+  ssl: {
     rejectUnauthorized: false,
-  },*/
+  },
 };
 
 const db = pgp(config);
