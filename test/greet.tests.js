@@ -15,17 +15,6 @@ describe('Greetings function',async function(){
     await db.none("delete from users")
     });
 
-it("should be able to count the names greeted", async function(){
-    let greetings = greetMeInLangage(db);
-
-
-
-    await greetings.getFromDatabase("Wiseman", "isixhosa");
-    await greetings.getFromDatabase("Linda", "isiXhosa");
-    await greetings.getFromDatabase("Linda", "isiXhosa")
-    assert.equal(2, await greetings.getMyCount());
-});
-
 it("should be able to count the names greeted but not twice", async function(){
     let greetings = greetMeInLangage(db);
 
@@ -48,6 +37,16 @@ it("should be able to count how many times the same name has been greeted", asyn
     assert.equal(2, await greetings.countEachName('LINDA'));
 
 })
+it("should be able to count the names greeted", async function(){
+    let greetings = greetMeInLangage(db);
+
+
+
+    await greetings.getFromDatabase("Wiseman", "isixhosa");
+    await greetings.getFromDatabase("Linda", "isiXhosa");
+    await greetings.getFromDatabase("Linda", "isiXhosa")
+    assert.equal(2, await greetings.getMyCount());
+});
 })
 
 
