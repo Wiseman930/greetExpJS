@@ -7,7 +7,7 @@ const DATABASE_URL =   process.env.DATABASE_URL || "postgresql://postgres:pg1999
 const config = {
     connectionString: DATABASE_URL
 }
-const db = pgp(config);
+const db = pgp(DATABASE_URL);
 
 describe('Greetings function', function(){
 
