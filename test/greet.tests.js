@@ -22,6 +22,7 @@ it("should be able to count the names greeted", async function(){
 
     await greetings.getFromDatabase("Wiseman", "isixhosa");
     await greetings.getFromDatabase("Linda", "isiXhosa");
+    await greetings.getFromDatabase("Linda", "isiXhosa")
     assert.equal(2, await greetings.getMyCount());
 });
 
@@ -40,9 +41,12 @@ it("should be able to count how many times the same name has been greeted", asyn
 
     let greetings = greetMeInLangage(db);
     await greetings.getFromDatabase("Wiseman", "afrikaans");
-    await greetings.getFromDatabase("Wiseman", "isixhosa");
+    await greetings.getFromDatabase("Linda", "isiXhosa");
+    await greetings.getFromDatabase("Linda", "isiXhosa");
 
-   // assert.equal(2, await greetings.countEachName('WISEMAN'));
+    assert.equal(1, await greetings.countEachName('WISEMAN'));
+    assert.equal(2, await greetings.countEachName('LINDA'));
+
 })
 })
 
