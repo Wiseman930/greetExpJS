@@ -7,7 +7,7 @@ const DATABASE_URL =   process.env.DATABASE_URL || "postgresql://postgres:pg1999
 const config = {
     connectionString: DATABASE_URL
 }
-const db = pgp(DATABASE_URL);
+const db = pgp(config);
 
 describe('Greetings function', function(){
 
@@ -26,36 +26,27 @@ it("should be able to count the names greeted but not twice", async function(){
     assert.equal(2, await greetings.getMyCount());
 
 });
-it('should delete users',async function(){
-    await db.none("delete from users")
-})
 
 it("should be able to count how many times the same name has been greeted", async function(){
-
     let greetings = greetMeInLangage(db);
-    await greetings.getFromDatabase("Wiseman", "afrikaans");
-    await greetings.getFromDatabase("Linda", "isiXhosa");
+
+    await greetings.getFromDatabase("Wiseman", 'english');
+    await greetings.getFromDatabase("Wiseman", "english");
     await greetings.getFromDatabase("Linda", "isiXhosa");
 
-    assert.equal(1, await greetings.countEachName('WISEMAN'));
-    assert.equal(2, await greetings.countEachName('LINDA'));
-})
-it('should delete users',async function(){
-    await db.none("delete from users")
+    assert.equal(2, await greetings.countEachName('WISEMAN'));
+    assert.equal(1, await greetings.countEachName('LINDA'));
+
 })
 it("should be able to count the names greeted", async function(){
     let greetings = greetMeInLangage(db);
 
-
-
-    await greetings.getFromDatabase("Wiseman", "isixhosa");
+    await greetings.getFromDatabase("Wiseman", 'english');
+    await greetings.getFromDatabase("Wiseman", "english");
     await greetings.getFromDatabase("Linda", "isiXhosa");
-    await greetings.getFromDatabase("Linda", "isiXhosa")
+
     assert.equal(2, await greetings.getMyCount());
 });
-it('should delete users',async function(){
-    await db.none("delete from users")
-})
 })
 
 
