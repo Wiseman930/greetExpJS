@@ -1,5 +1,5 @@
 create table users (
 	id serial not null primary key,
-    greeted_names text not null,
+    greeted_name text not null,
 	count int not null
 )
