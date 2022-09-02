@@ -9,7 +9,7 @@ const config = {
 }
 const db = pgp(config);
 
-describe('Greetings function',async function(){
+describe('Greetings function', function(){
 
     beforeEach(async function(){
     await db.none("delete from users")
@@ -138,8 +138,6 @@ it("should be able to greet a person in afrikaans when a person enters their nam
     assert.equal('Hallo, Mabusela' , greetings.returnChosenLanguage());
 });
 
-it('should delete users',async function(){
-    await db.none("delete from users")
-})
+
 
 });
