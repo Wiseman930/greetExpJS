@@ -6,11 +6,11 @@ const pgp = require('pg-promise')()
 const DATABASE_URL =   process.env.DATABASE_URL || "postgresql://postgres:pg1999@localhost:5432/postgres";
 const db = pgp(DATABASE_URL);
 
-describe('Greetings function',async function(){
+/*describe('Greetings function',async function(){
 
-    /*beforeEach(async function(){
+    beforeEach(async function(){
     await db.none("delete from users")
-    });*/
+    });
 
 it("should be able to count the names greeted", async function(){
     let greetings = greetMeInLangage(db);
@@ -41,7 +41,7 @@ it("should be able to count how many times the same name has been greeted", asyn
 
    // assert.equal(2, await greetings.countEachName('WISEMAN'));
 })
-});
+})*/
 
 
 
