@@ -8,7 +8,9 @@ module.exports = function greetMeInLangage(db) {
     resetMessages = "No names are greeted";
     returnForEmptyButtons = "You have just reset your counter";
     let deleteData = await db.oneOrNone("delete from users");
+    //let insert = await db.oneOrNone("INSERT INTO users (count, greeted_Name) VALUES (5, 'Wiseman')")
     return deleteData;
+
   }
 
   function returnResetMessage() {
@@ -64,11 +66,14 @@ module.exports = function greetMeInLangage(db) {
   async function getFromDatabase(aNameIn, LanguageIn) {
     giveMeName2 = aNameIn.toUpperCase();
 
-    let checkName = await db.oneOrNone("SELECT greeted_name FROM users WHERE =$1", [giveMeName2]);
+     checkName = await db.oneOrNone('SELECT greeted_name FROM users WHERE greeted_name =$1', [giveMeName2])
+
     if (checkName == null && giveMeName2 != "" && LanguageIn) {
-      await db.none("INSERT INTO users(greeted_name, count) values($1, $2)", [giveMeName2, 1]);
-    } else if (giveMeName2 != "" && LanguageIn) {
-      await db.none("UPDATE users SET count = count+1 WHERE greeted_name =$1", [giveMeName2]);
+
+        await db.none('INSERT INTO users(greeted_name, count) values($1,$2)', [giveMeName2, 1])
+    }
+    else if (giveMeName2 != "" && LanguageIn) {
+        await db.none('UPDATE users SET count = count+1 WHERE greeted_name =$1', [giveMeName2])
     }
   }
 
@@ -77,12 +82,10 @@ module.exports = function greetMeInLangage(db) {
   }
   async function greetedNames() {
     let storedNames = await db.manyOrNone("SELECT greeted_name FROM users;");
-    console.log(storedNames)
     return storedNames;
   }
   async function getMyCount() {
     let grandCount = await db.one("SELECT count(*) FROM users;");
-    console.log(grandCount)
     return grandCount.count;
   }
   function returnEmptyButtonsAndTextbox() {

@@ -3,20 +3,7 @@ const greetMeInLangage = require('../greet.js');
 
 const pgp = require('pg-promise')()
 
-
-let useSSL = false;
-let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local){
-     useSSL = true;
- }
- const DATABASE_URL = process.env.DATABASE_URL || {
-    host: 'localhost',
-    port: 5432,
-    database: 'datagreet',
-    user: 'postgres',
-    password: 'BAab5525#',
-
-};
+const DATABASE_URL =   process.env.DATABASE_URL || "postgresql://postgres:pg1999@localhost:5432/postgres";
 const db = pgp(DATABASE_URL);
 
 describe('Greetings function',async function(){
